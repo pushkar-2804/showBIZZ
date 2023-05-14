@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Modal, Button } from "react-bootstrap";
+import { Form, Modal, Button, Dropdown } from "react-bootstrap";
 
 const MovieForm = (props) => {
   const regex_name =
@@ -32,6 +32,7 @@ const MovieForm = (props) => {
     if (noError) {
       props.setShowModal(false);
       localStorage.setItem("bookingData", JSON.stringify(bookingData));
+      props.notify();
     }
   };
 
@@ -40,8 +41,6 @@ const MovieForm = (props) => {
   };
 
   const checkError = () => {
-    // errors = {};
-    // setnoerror(true);
     noError = true;
 
     //VALIDATING NAME
@@ -65,120 +64,122 @@ const MovieForm = (props) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Label>Movie Name</Form.Label>
-      <Form.Group controlId="movie">
-        <Form.Control
-          type="text"
-          disabled
-          value={props.movie}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="name">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type="text"
-          name="name"
-          className={nameError ? "border border-danger" : ""}
-          placeholder="Enter your name"
-          value={bookingData.name}
-          onChange={handleChange}
-          required
-        />
-        {nameError && (
-          <div className="text-danger small">*Enter Valid Name</div>
-        )}
-      </Form.Group>
-
-      <Form.Group controlId="phone">
-        <Form.Label>Phone</Form.Label>
-        <Form.Control
-          type="number"
-          name="phone"
-          className={mobileError ? "border border-danger" : ""}
-          placeholder="Enter Phone Number"
-          value={bookingData.phone}
-          onChange={handleChange}
-          required
-        />
-        {mobileError && (
-          <div className="text-danger small">*Enter valid Phone</div>
-        )}
-      </Form.Group>
-
-      <Form.Group controlId="date">
-        <Form.Label>Date</Form.Label>
-        <Form.Control
-          type="date"
-          name="date"
-          min={new Date().toISOString().slice(0, 10)}
-          placeholder="Select date"
-          value={bookingData.date}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-
-      <Form.Group controlId="time">
-        <Form.Label>Show Time</Form.Label>
-        <Form.Control
-          type="time"
-          name="time"
-          placeholder="Select show time"
-          value={bookingData.time}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Number of Tickets</Form.Label>
-        <div className="d-flex align-items-center">
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() =>
-              setBookingData({
-                ...bookingData,
-                numTickets: Math.max(1, bookingData.numTickets - 1),
-              })
-            }
-          >
-            -
-          </Button>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Form.Label>Movie Name</Form.Label>
+        <Form.Group controlId="movie">
           <Form.Control
-            type="number"
-            name="numTickets"
-            min="1"
+            type="text"
             disabled
-            value={bookingData.numTickets}
-            // onChange={handleNumTicketsChange}
-            style={{ width: "50px", margin: "0 10px" }}
+            value={props.movie}
+            onChange={handleChange}
             required
           />
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() =>
-              setBookingData({
-                ...bookingData,
-                numTickets: Math.min(10, bookingData.numTickets + 1),
-              })
-            }
-          >
-            +
-          </Button>
-        </div>
-      </Form.Group>
+        </Form.Group>
+        <Form.Group controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            className={nameError ? "border border-danger" : ""}
+            placeholder="Enter your name"
+            value={bookingData.name}
+            onChange={handleChange}
+            required
+          />
+          {nameError && (
+            <div className="text-danger small">*Enter Valid Name</div>
+          )}
+        </Form.Group>
 
-      <Modal.Footer>
-        <button onClick={handleClose}>Close</button>
-        <button type="submit" className="btn btn-danger">
-          Book Ticket
-        </button>
-      </Modal.Footer>
-    </Form>
+        <Form.Group controlId="phone">
+          <Form.Label>Phone</Form.Label>
+          <Form.Control
+            type="number"
+            name="phone"
+            className={mobileError ? "border border-danger" : ""}
+            placeholder="Enter Phone Number"
+            value={bookingData.phone}
+            onChange={handleChange}
+            required
+          />
+          {mobileError && (
+            <div className="text-danger small">*Enter valid Phone</div>
+          )}
+        </Form.Group>
+
+        <Form.Group controlId="date">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            type="date"
+            name="date"
+            min={new Date().toISOString().slice(0, 10)}
+            placeholder="Select date"
+            value={bookingData.date}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group controlId="time">
+          <Form.Label>Show Time</Form.Label>
+          <Form.Control
+            type="time"
+            name="time"
+            placeholder="Select show time"
+            value={bookingData.time}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Number of Tickets</Form.Label>
+          <div className="d-flex align-items-center">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() =>
+                setBookingData({
+                  ...bookingData,
+                  numTickets: Math.max(1, bookingData.numTickets - 1),
+                })
+              }
+            >
+              -
+            </Button>
+            <Form.Control
+              type="number"
+              name="numTickets"
+              min="1"
+              disabled
+              value={bookingData.numTickets}
+              // onChange={handleNumTicketsChange}
+              style={{ width: "50px", margin: "0 10px" }}
+              required
+            />
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() =>
+                setBookingData({
+                  ...bookingData,
+                  numTickets: Math.min(10, bookingData.numTickets + 1),
+                })
+              }
+            >
+              +
+            </Button>
+          </div>
+        </Form.Group>
+        <Modal.Footer>
+          <span>Amount: Rs {bookingData.numTickets * 300}</span>
+          <button onClick={handleClose}>Close</button>
+          <button type="submit" className="btn btn-danger">
+            Book Ticket
+          </button>
+        </Modal.Footer>
+      </Form>
+    </>
   );
 };
 

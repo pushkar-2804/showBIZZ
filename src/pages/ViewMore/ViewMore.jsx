@@ -4,8 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import MovieForm from "../../Components/Form/Form";
 import { showMovieData } from "../../Components/Card/Card";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewMore = () => {
+  const notify = () => toast.success("Ticket Succesfully Booked!");
   const [showModal, setShowModal] = useState(false);
   const nav = useNavigate();
   useEffect(() => {
@@ -65,12 +68,14 @@ const ViewMore = () => {
                 <MovieForm
                   movie={showMovieData?.show?.name}
                   setShowModal={setShowModal}
+                  notify={notify}
                 />
               </Modal.Body>
             </Modal>
           )}
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 };

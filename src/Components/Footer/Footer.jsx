@@ -50,7 +50,7 @@ const Footer = () => {
           </Col>
         </Row>
         <hr />
-        <div className="text-center">
+        <div className="text-center pb-2">
           <p>
             &copy; {new Date().getFullYear()} ShowBIZZ. All Rights Reserved.
           </p>
