@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import ViewMore from "./pages/ViewMore";
+import ViewMore from "./pages/ViewMore/ViewMore";
 import MyNavbar from "./Components/Navbar/Navbar";
 
 const App = () => {
