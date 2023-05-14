@@ -5,9 +5,10 @@ const MovieForm = (props) => {
   const regex_name =
     /^[a-zA-Z]{2,15}(\s[a-zA-Z.]{1,10})?(\s[a-zA-Z]{2,10})?(\s[a-zA-Z]{2,10})?$/;
   const regex_contact = /^[6-9]([0-9]){9}$/;
-  const [noerror, setnoerror] = useState(false);
+  // const [noerror, setnoerror] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [mobileError, setMobileError] = useState(false);
+  let noError = true;
 
   const [bookingData, setBookingData] = useState({
     name: "",
@@ -18,14 +19,17 @@ const MovieForm = (props) => {
   });
 
   const handleChange = (e) => {
+    // setnoerror(true);
     const { name, value } = e.target;
+    if (name === "name") setNameError(false);
+    if (name === "phone") setMobileError(false);
     setBookingData({ ...bookingData, [name]: value });
   };
   const handleSubmit = (event) => {
-    checkError();
-    console.log(noerror);
     event.preventDefault();
-    if (noerror) {
+    checkError();
+    console.log(noError);
+    if (noError) {
       props.setShowModal(false);
       localStorage.setItem("bookingData", JSON.stringify(bookingData));
     }
@@ -36,15 +40,17 @@ const MovieForm = (props) => {
   };
 
   const checkError = () => {
-    errors = {};
-    setnoerror(true);
+    // errors = {};
+    // setnoerror(true);
+    noError = true;
 
     //VALIDATING NAME
     if (regex_name.test(bookingData.name.trim())) {
       bookingData.name = bookingData.name.trim();
       setNameError(false);
     } else {
-      setnoerror(false);
+      // setnoerror(false);
+      noError = false;
       setNameError(true);
     }
     // Validating mobile
@@ -52,7 +58,8 @@ const MovieForm = (props) => {
       setMobileError(false);
       bookingData.phone = bookingData.phone.trim();
     } else {
-      setnoerror(false);
+      // setnoerror(false);
+      noError = false;
       setMobileError(true);
     }
   };
