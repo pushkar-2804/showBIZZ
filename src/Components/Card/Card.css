@@ -1,0 +1,71 @@
+.movieCard{
+    /* border: 1px solid white; */
+    border-radius: 10px;
+    margin: 1rem;
+    overflow: hidden;
+    background-color: #343739;
+    width: 25vw;
+    max-width: 15rem;
+    min-width: 160px;
+}
+
+/* desc */
+.movieWord, .movieGenre{
+    color: aliceblue;
+    font-weight: 500;
+    font-size: 0.7em !important;
+}
+.movieDesc{
+    padding: 16px;
+    /* background-color: rgba(250, 235, 215, 0.268); */
+    background-color: rgba(0, 0, 0, 0.448);
+    z-index: 10;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.movieName{
+    /* background-color: antiquewhite; */
+    z-index: 10;
+    /* mix-blend-mode: color-burn; */
+    font-weight: 700;
+    /* color: rgb(234, 157, 129); */
+    color: white;
+}
+
+/* Img */
+.wrap--movieImage{
+    width: 25vw;
+    max-width: 15rem;
+    min-width: 160px;
+    object-fit: cover;
+  /* border: 2px solid red; */
+  max-height: 15rem;
+}
+.wrap--movieImage :hover{
+    transform: scale(1.05);
+    transition: all 0.5s;
+}
+.wrap--movieImage img{
+    width: 100% !important;
+  /* border: 2px solid red; */
+
+}
+
+@media screen and (max-width:767px) {
+    .movieCard, .wrap--movieImage{
+        min-width: 200px;
+    }
+    .searchBar{
+        width: 60% !important;
+    }
+}
+@media screen and (max-width:500px) {
+    .movieCard, .wrap--movieImage{
+        min-width: 250px;
+    }
+    .searchBar{
+        width: 80% !important;
+    }
+}

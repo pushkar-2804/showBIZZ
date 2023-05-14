@@ -1,0 +1,9 @@
+.flexBox{
+  display: flex;
+  width: 90%;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: auto;
+  /* border: 2px solid red; */
+}
