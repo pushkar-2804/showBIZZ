@@ -6,7 +6,8 @@ const MovieForm = (props) => {
     /^[a-zA-Z]{2,15}(\s[a-zA-Z.]{1,10})?(\s[a-zA-Z]{2,10})?(\s[a-zA-Z]{2,10})?$/;
   const regex_contact = /^[6-9]([0-9]){9}$/;
   const [noerror, setnoerror] = useState(false);
-  let errors = {};
+  const [nameError, setNameError] = useState(false);
+  const [mobileError, setMobileError] = useState(false);
 
   const [bookingData, setBookingData] = useState({
     name: "",
@@ -15,21 +16,15 @@ const MovieForm = (props) => {
     time: "",
     numTickets: 1,
   });
-  // console.log(bookingData.numTickets);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(name, value);
     setBookingData({ ...bookingData, [name]: value });
-
-    // console.log(bookingData);
   };
   const handleSubmit = (event) => {
     checkError();
-    console.log(errors);
     console.log(noerror);
     event.preventDefault();
-    // console.log(bookingData);
     if (noerror) {
       props.setShowModal(false);
       localStorage.setItem("bookingData", JSON.stringify(bookingData));
@@ -47,21 +42,18 @@ const MovieForm = (props) => {
     //VALIDATING NAME
     if (regex_name.test(bookingData.name.trim())) {
       bookingData.name = bookingData.name.trim();
-      errors.name = "";
+      setNameError(false);
     } else {
-      console.log("fddf");
       setnoerror(false);
-      errors.name = "Please Enter Full Name";
-      return errors;
+      setNameError(true);
     }
     // Validating mobile
     if (regex_contact.test(bookingData.phone.trim())) {
-      errors.phone = "";
+      setMobileError(false);
       bookingData.phone = bookingData.phone.trim();
     } else {
       setnoerror(false);
-      errors.phone = "Invalid Mobile Number";
-      return errors;
+      setMobileError(true);
     }
   };
 
@@ -82,13 +74,15 @@ const MovieForm = (props) => {
         <Form.Control
           type="text"
           name="name"
-          className="border border-danger"
+          className={nameError ? "border border-danger" : ""}
           placeholder="Enter your name"
           value={bookingData.name}
           onChange={handleChange}
           required
         />
-        <div className="text-danger small">*Enter Valid Name</div>
+        {nameError && (
+          <div className="text-danger small">*Enter Valid Name</div>
+        )}
       </Form.Group>
 
       <Form.Group controlId="phone">
@@ -96,12 +90,15 @@ const MovieForm = (props) => {
         <Form.Control
           type="number"
           name="phone"
+          className={mobileError ? "border border-danger" : ""}
           placeholder="Enter Phone Number"
           value={bookingData.phone}
           onChange={handleChange}
           required
         />
-        <div className="text-danger small">*Enter valid Phone</div>
+        {mobileError && (
+          <div className="text-danger small">*Enter valid Phone</div>
+        )}
       </Form.Group>
 
       <Form.Group controlId="date">
