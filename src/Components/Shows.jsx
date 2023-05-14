@@ -8,7 +8,8 @@ const Shows = (props) => {
   const data = props.data;
   const searchShow = () => {
     axios
-      .get(`${import.meta.env.VITE_APP_URL}:${searchText}`)
+      // .get(`${import.meta.env.VITE_APP_URL}:${searchText}`)
+      .get(`https://api.tvmaze.com/search/shows?q=:${searchText}`)
       .then((res) => {
         console.log(res.data);
         props.setData(res.data);

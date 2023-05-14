@@ -9,7 +9,8 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_APP_URL}all`)
+      // .get(`${import.meta.env.VITE_APP_URL}all`)
+      .get(`https://api.tvmaze.com/search/shows?q=all`)
       .then((res) => {
         // console.log(res.data);
         setData(res.data);
