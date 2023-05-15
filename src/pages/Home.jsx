@@ -6,6 +6,7 @@ import axios from "axios";
 
 const Home = () => {
   const [data, setData] = useState();
+  const [carouselData, setCarouselData] = useState();
 
   useEffect(() => {
     axios
@@ -14,12 +15,13 @@ const Home = () => {
       .then((res) => {
         // console.log(res.data);
         setData(res.data);
+        setCarouselData(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
   return (
     <div>
-      <CarouselBox data={data} />
+      <CarouselBox data={carouselData} />
       <Shows data={data} setData={setData} />
       <Footer />
     </div>
